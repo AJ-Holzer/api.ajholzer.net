@@ -1,0 +1,5 @@
+dotenv==0.9.9
+json5==0.13.0
+fastapi==0.128.0
+uvicorn==0.40.0
+requests==2.32.5
