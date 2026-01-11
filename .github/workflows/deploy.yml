@@ -30,4 +30,4 @@ jobs:
           script: |
             cd /opt/api.ajholzer.net
             chmod +x ./action.deploy.sh
-            ./deploy.sh
+            ./action.deploy.sh
