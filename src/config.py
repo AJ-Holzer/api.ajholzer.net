@@ -34,7 +34,7 @@ class Config:
         """Loads the .env and .config file."""
         # Load .env file
         logger.debug("Loading environment variables...")
-        dotenv.load_dotenv(dotenv_path=Path("..", "..", "..", ".env").resolve())
+        dotenv.load_dotenv(dotenv_path=Path("/etc/api.ajholzer.net/.env").resolve())
 
         # Define logging config
         self.LOGLEVEL: str = os.getenv(key="LOGLEVEL", default="INFO")
