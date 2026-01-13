@@ -28,4 +28,4 @@ pip3 install --upgrade pip
 pip3 install -r "$REPO_PATH/requirements.txt"
 
 # Restart api
-sudo systemctl restart api.ajholzer.net
+sudo /bin/systemctl restart api.ajholzer.net.service
