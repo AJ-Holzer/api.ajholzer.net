@@ -48,10 +48,6 @@ class Config:
         self.GITHUB_TOKEN: Optional[str] = os.getenv(key="GITHUB_TOKEN")
         self.GITHUB_USERNAME: Optional[str] = os.getenv(key="GITHUB_USERNAME")
         self.GITHUB_MAX_REPOS: int = int(os.getenv(key="GITHUB_MAX_REPOS", default=20))
-        self.GITHUB_WEBSITE_SECRET: bytes = os.getenv(
-            key="GITHUB_WEBSITE_SECRET",
-            default="",
-        ).encode()
 
         # Expiration config
         self.REPOSITORY_EXPIRATION_INTERVAL_MINUTES: int = int(
@@ -81,16 +77,11 @@ class Config:
             ValueError: When a value is not specified for a config key.
         """
         logger.debug("Checking config...")
-        if not self.GITHUB_TOKEN:
+        if not self.GITHUB_TOKEN or self.GITHUB_TOKEN.lower() == "none":
             logger.exception("'GITHUB_TOKEN' must be specified in the .env file!")
 
-        if not self.GITHUB_USERNAME:
+        if not self.GITHUB_USERNAME or self.GITHUB_USERNAME.lower() == "none":
             logger.exception("'GITHUB_USERNAME' must be specified in the .env file!")
-
-        if not self.GITHUB_WEBSITE_SECRET:
-            logger.exception(
-                "'GITHUB_WEBSITE_SECRET' must be specified in the .env file!"
-            )
 
         if not self.LOGLEVEL.isdigit() and self.LOGLEVEL not in NAME_TO_LEVEL:
             logger.exception(f"Invalid LOGLEVEL: {self.LOGLEVEL}")
