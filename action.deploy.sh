@@ -14,7 +14,7 @@ git clean -fd
 git pull origin main
 
 # Create venv
-if [! -d "$VENV_PATH"]; then
+if [ ! -d "$VENV_PATH" ]; then
     python3 -m venv "$VENV_PATH"
 fi
 
