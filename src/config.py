@@ -28,13 +28,19 @@ NAME_TO_LEVEL: list[str] = [
     "NOTSET",
 ]
 
+# Define .env file path
+ENV_FILEPATH: Path = Path("/etc/api.ajholzer.net/.env")
+
 
 class Config:
     def __init__(self) -> None:
         """Loads the .env and .config file."""
         # Load .env file
         logger.debug("Loading environment variables...")
-        dotenv.load_dotenv(dotenv_path=Path("/etc/api.ajholzer.net/.env").resolve())
+        if not dotenv.load_dotenv(dotenv_path=ENV_FILEPATH.resolve()):
+            raise RuntimeError(
+                f".env file not loaded! Check the path '{ENV_FILEPATH.resolve()}'"
+            )
 
         # Define logging config
         self.LOGLEVEL: str = os.getenv(key="LOGLEVEL", default="INFO")
@@ -79,12 +85,15 @@ class Config:
         logger.debug("Checking config...")
         if not self.GITHUB_TOKEN or self.GITHUB_TOKEN.lower() == "none":
             logger.exception("'GITHUB_TOKEN' must be specified in the .env file!")
+            raise RuntimeError("'GITHUB_TOKEN' must be specified in the .env file!")
 
         if not self.GITHUB_USERNAME or self.GITHUB_USERNAME.lower() == "none":
             logger.exception("'GITHUB_USERNAME' must be specified in the .env file!")
+            raise RuntimeError("'GITHUB_USERNAME' must be specified in the .env file!")
 
         if not self.LOGLEVEL.isdigit() and self.LOGLEVEL not in NAME_TO_LEVEL:
             logger.exception(f"Invalid LOGLEVEL: {self.LOGLEVEL}")
+            raise RuntimeError("'GITHUB_LOGLEVEL' must be specified in the .env file!")
 
 
 config = Config()
