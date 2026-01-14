@@ -15,4 +15,9 @@ TAGS: list[str] = ["health"]
 
 @router.get(path="", response_model=HealthModel)
 def get_health() -> HealthModel:
+    """Get health status of the API.
+
+    Returns:
+        HealthModel: The health model containing the health status of the API.
+    """
     return HealthModel(status="OK")
