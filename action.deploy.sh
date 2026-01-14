@@ -12,7 +12,6 @@ cd "$REPO_PATH" || exit 1
 #  Update local repo  #
 # ################### #
 
-
 # Clear repo and pull from github
 echo "Cleaning and pulling from GitHub..."
 git reset --hard HEAD
@@ -24,7 +23,6 @@ git pull origin main
 # ############################# #
 #  Install python requirements  #
 # ############################# #
-
 
 echo "Installing requirements..."
 
