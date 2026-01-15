@@ -1,7 +1,6 @@
 # Auto-generated __init__.py
 
 from . import logging
-from .logging import setup_bootstrap_logging
 from .logging import setup_logging
 from . import paths
 from .paths import normalize_path
@@ -14,6 +13,5 @@ __all__ = [
     "restart",
     "normalize_path",
     "restart_api",
-    "setup_bootstrap_logging",
     "setup_logging",
 ]
