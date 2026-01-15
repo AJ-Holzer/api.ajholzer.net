@@ -8,6 +8,7 @@ VENV_PATH=".venv"
 cd "$REPO_PATH" || exit 1
 
 
+
 # ################### #
 #  Update local repo  #
 # ################### #
@@ -24,8 +25,6 @@ git pull origin main
 #  Install python requirements  #
 # ############################# #
 
-echo "Installing requirements..."
-
 # Create venv
 if [ ! -d "$VENV_PATH" ]; then
     python3 -m venv "$VENV_PATH"
@@ -35,10 +34,13 @@ fi
 source "$VENV_PATH/bin/activate"
 
 # Upgrade pip
+echo "Upgrading pip..."
 pip3 install --upgrade pip
 
 # Install requirements
+echo "Installing pip requirements..."
 pip3 install -r "$REPO_PATH/requirements.txt"
 
 # Restart api
+echo "Restarting API..."
 sudo /bin/systemctl restart api.ajholzer.net.service
