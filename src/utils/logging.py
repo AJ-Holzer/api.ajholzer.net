@@ -51,11 +51,3 @@ def setup_logging(loglevel: int | str, log_filepath: Path) -> None:
             },
         }
     )
-
-
-def setup_bootstrap_logging() -> None:
-    """Set up bootstrap logging configuration."""
-    setup_logging(
-        loglevel=logging.DEBUG,
-        log_filepath=Path("api_bootstrap.log").resolve(),
-    )
