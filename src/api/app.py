@@ -16,7 +16,7 @@ from starlette.responses import Response, JSONResponse
 from starlette.routing import BaseRoute
 from typing import Optional, Sequence, Any
 from enum import Enum
-from config import config
+from config.config import config
 from utils.paths import normalize_path
 
 

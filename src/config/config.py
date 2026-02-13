@@ -42,6 +42,9 @@ class Config:
                 f".env file not loaded! Check the path '{ENV_FILEPATH.resolve()}'"
             )
 
+        # Load yaml config
+        self.YAML_CONFIG_FILEPATH: Optional[str] = os.getenv("CONFIG_FILEPATH")
+
         # Define logging config
         self.LOGLEVEL: str = os.getenv(key="LOGLEVEL", default="INFO")
         self.LOG_FILEPATH: Path = (

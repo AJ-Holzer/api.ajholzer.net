@@ -37,5 +37,5 @@ def list_repositories() -> list[GitHubRepositoryModel]:
             description=repository.description or "",
             commit_count=repository.commit_count,
         )
-        for repository in github.repositories
+        for repository in github.get_repos()
     ]

@@ -15,7 +15,7 @@ logger: logging.Logger = logging.getLogger(name=__name__)
 
 def main() -> None:
     # Load config
-    from config import config
+    from config.config import config
 
     # Set up logging from config
     setup_logging(loglevel=config.LOGLEVEL, log_filepath=config.LOG_FILEPATH)

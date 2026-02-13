@@ -8,7 +8,7 @@ import requests  # type: ignore[import-untyped]
 import time
 import logging
 
-from config import config
+from config.config import config
 from typing import Any, Optional
 from integrations.github.types import GitHubRepository
 
@@ -131,8 +131,7 @@ class GitHub:
 
         return repositories
 
-    @property
-    def repositories(self) -> list[GitHubRepository]:
+    def get_repos(self) -> list[GitHubRepository]:
         """Returns the most resent repositories within the interval.
 
         Returns:
