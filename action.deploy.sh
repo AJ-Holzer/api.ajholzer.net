@@ -31,6 +31,7 @@ if [ ! -d "$VENV_PATH" ]; then
 fi
 
 # Activate venv
+# shellcheck disable=SC1091
 source "$VENV_PATH/bin/activate"
 
 # Upgrade pip
@@ -44,3 +45,5 @@ pip3 install -r "$REPO_PATH/requirements.txt"
 # Restart api
 echo "Restarting API..."
 sudo /bin/systemctl restart api.ajholzer.net.service
+
+echo "API updated successful!"
