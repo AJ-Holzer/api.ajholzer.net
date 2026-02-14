@@ -66,9 +66,11 @@ async def list_repositories(
         raise HTTPException(status_code=401, detail="Invalid signature")
 
     # Save file safely
-    safe_filename: str = Path(str(file.filename)).name
-    save_path: Path = UPLOAD_DIR / safe_filename
+    safe_filename: str = f"{Path(str(file.filename)).name}"
+    save_path: Path = UPLOAD_DIR / str(now)
+    save_path.mkdir(exist_ok=True)
+    save_filepath = save_path / safe_filename
 
-    save_path.write_bytes(content)
+    save_filepath.write_bytes(content)
 
     return {"status": "Upload successful"}
