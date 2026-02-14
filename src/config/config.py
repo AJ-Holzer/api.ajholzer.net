@@ -78,6 +78,7 @@ class Config:
         self.API_TITLE: str = "api.ajholzer.net"
         self.API_VERSION: str = "1.0.0"
         self.API_PREFIX: str = os.getenv("API_PREFIX", "")
+        self.API_UPLOAD_SECRET: bytes = os.getenv("UPLOAD_SECRET", "").encode()
 
     def check(self) -> None:
         """Checks the config for missing values.
@@ -97,6 +98,10 @@ class Config:
         if not self.LOGLEVEL.isdigit() and self.LOGLEVEL not in NAME_TO_LEVEL:
             logger.exception(f"Invalid LOGLEVEL: {self.LOGLEVEL}")
             raise RuntimeError("'GITHUB_LOGLEVEL' must be specified in the .env file!")
+
+        if not self.API_UPLOAD_SECRET:
+            logger.exception(f"No upload secret: '{self.API_UPLOAD_SECRET}'!")
+            raise RuntimeError("'UPLOAD_SECRET' must be specified in the .env file!")
 
 
 config = Config()
