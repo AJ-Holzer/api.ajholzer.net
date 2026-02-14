@@ -42,6 +42,11 @@ pip3 install --upgrade pip
 echo "Installing pip requirements..."
 pip3 install -r "$REPO_PATH/requirements.txt"
 
+
+# ############# #
+#  Restart API  #
+# ############# #
+
 # Restart api
 echo "Restarting API..."
 sudo /bin/systemctl restart api.ajholzer.net.service
