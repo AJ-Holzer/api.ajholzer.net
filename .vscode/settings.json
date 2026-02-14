@@ -3,6 +3,7 @@
         "appleboy",
         "dotenv",
         "fastapi",
+        "ghdeploy",
         "LOGLEVEL",
         "uvicorn",
         "venv"

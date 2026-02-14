@@ -23,7 +23,7 @@ PREFIX: str = "/data"
 TAGS: list[str] = ["data", "upload"]
 
 # Set directories
-UPLOAD_DIR: Path = Path("/home/admin/uploads")
+UPLOAD_DIR: Path = Path("/home/ghdeploy/uploads")
 MAX_TIME_DIFF: int = 60  # In seconds
 
 # Create upload dir if not exists
