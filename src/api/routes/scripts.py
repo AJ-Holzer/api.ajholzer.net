@@ -4,6 +4,10 @@
 # ============================== #
 
 
+import hashlib
+import hmac
+import time
+
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import PlainTextResponse, Response
 from config.config import config
@@ -16,6 +20,26 @@ PREFIX: str = "/scripts"
 TAGS: list[str] = ["scripts"]
 
 script_cache: dict[str, tuple[float, bytes]] = {}
+
+
+def verify_request(target: str, x_timestamp: str, x_signature: str) -> None:
+    try:
+        timestamp: int = int(x_timestamp)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid timestamp")
+
+    now: int = int(time.time())
+    if abs(now - timestamp) > config.API_MAX_TIME_DIFF:
+        raise HTTPException(status_code=401, detail="Request expired")
+
+    message: bytes = f"{timestamp}:{target}".encode()
+
+    expected: str = hmac.new(
+        config.API_UPLOAD_SECRET, message, hashlib.sha256
+    ).hexdigest()
+
+    if not hmac.compare_digest(expected, x_signature):
+        raise HTTPException(status_code=401, detail="Invalid signature")
 
 
 def load_script(name: str) -> bytes:
@@ -47,16 +71,15 @@ def load_script(name: str) -> bytes:
 
 
 @router.get(path="/{target}", response_class=PlainTextResponse)
-def get_script(target: str) -> Response:
+def get_script(target: str, x_timestamp: str, x_signature: str) -> Response:
+    # Verify request
+    verify_request(target=target, x_timestamp=x_timestamp, x_signature=x_signature)
+
     # Get script
     script: bytes = load_script(name=target)
 
     # Create mime
-    mime: str
-    if target == "w":
-        mime = "text/plain"
-    else:
-        mime = "text/x-shellscript"
+    mime: str = "text/plain" if target == "w" else "text/x-shellscript"
 
     return Response(
         content=script,

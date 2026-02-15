@@ -85,6 +85,7 @@ class Config:
             "w": "w.ps1",
             "m": "m.sh",
         }
+        self.API_MAX_TIME_DIFF: int = 60
 
     def check(self) -> None:
         """Checks the config for missing values.
