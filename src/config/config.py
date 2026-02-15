@@ -81,9 +81,14 @@ class Config:
         self.API_UPLOAD_SECRET: bytes = os.getenv("UPLOAD_SECRET", "").encode()
         self.API_SCRIPTS_PATH: Path = Path("/home/ghdeploy/scripts")
         self.API_SCRIPTS_ALLOWED: dict[str, str] = {
-            "l": "l.sh",
-            "w": "w.ps1",
-            "m": "m.sh",
+            "linux": "linux.sh",
+            "windows": "windows.ps1",
+            "macos": "macos.sh",
+        }
+        self.API_MIME_MAP: dict[str, str] = {
+            "linux": "text/x-shellscript",
+            "macos": "text/x-shellscript",
+            "windows": "text/plain",
         }
         self.API_MAX_TIME_DIFF: int = 60
 

@@ -8,7 +8,7 @@ import hashlib
 import hmac
 import time
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Header
 from fastapi.responses import PlainTextResponse, Response
 from config.config import config
 from typing import Optional
@@ -43,7 +43,7 @@ def verify_request(target: str, x_timestamp: str, x_signature: str) -> None:
 
 
 def load_script(name: str) -> bytes:
-    global script_mtime, script_cache
+    global script_cache
 
     # Validate name
     if name not in config.API_SCRIPTS_ALLOWED:
@@ -71,7 +71,11 @@ def load_script(name: str) -> bytes:
 
 
 @router.get(path="/{target}", response_class=PlainTextResponse)
-def get_script(target: str, x_timestamp: str, x_signature: str) -> Response:
+def get_script(
+    target: str,
+    x_timestamp: str = Header(...),
+    x_signature: str = Header(...),
+) -> Response:
     # Verify request
     verify_request(target=target, x_timestamp=x_timestamp, x_signature=x_signature)
 
@@ -79,7 +83,7 @@ def get_script(target: str, x_timestamp: str, x_signature: str) -> Response:
     script: bytes = load_script(name=target)
 
     # Create mime
-    mime: str = "text/plain" if target == "w" else "text/x-shellscript"
+    mime: str = config.API_MIME_MAP[target]
 
     return Response(
         content=script,
