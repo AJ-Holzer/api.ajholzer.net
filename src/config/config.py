@@ -79,6 +79,12 @@ class Config:
         self.API_VERSION: str = "1.0.0"
         self.API_PREFIX: str = os.getenv("API_PREFIX", "")
         self.API_UPLOAD_SECRET: bytes = os.getenv("UPLOAD_SECRET", "").encode()
+        self.API_SCRIPTS_PATH: Path = Path("/home/ghdeploy/scripts")
+        self.API_SCRIPTS_ALLOWED: dict[str, str] = {
+            "l": "l.sh",
+            "w": "w.ps1",
+            "m": "m.sh",
+        }
 
     def check(self) -> None:
         """Checks the config for missing values.
