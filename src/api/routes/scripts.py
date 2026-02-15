@@ -12,8 +12,8 @@ from pathlib import Path
 
 
 router: APIRouter = APIRouter()
-PREFIX: str = "/script"
-TAGS: list[str] = ["script"]
+PREFIX: str = "/scripts"
+TAGS: list[str] = ["scripts"]
 
 script_cache: dict[str, tuple[float, bytes]] = {}
 
